@@ -1,24 +1,59 @@
 	#include <xc.inc>
+; main.asm
+; Main program control for Heartbeat Interval Measurement
+; PIC18F87K22 Processor
 
-psect	code, abs
-	
-main:
-	org	0x0
-	goto	start
+#include <p18f87k22.inc>
+#include "config.inc"
+#include "adc_routines.inc"
+#include "peak_detection.inc"
+#include "interval_measurement.inc"
 
-	org	0x100		    ; Main code starts here at address 0x100
-start:
-	movlw 	0x0
-	movwf	TRISB, A	    ; Port C all outputs
-	bra 	test
-loop:
-	movff 	0x06, PORTB
-	incf 	0x06, W, A
-test:
-	movwf	0x06, A	    ; Test for end of loop condition
-	movlw 	0x63
-	cpfsgt 	0x06, A
-	bra 	loop		    ; Not yet finished goto start of loop again
-	goto 	0x0		    ; Re-run program from start
+; Global Variables
+    UDATA
+peak_count     RES 1       ; Counter for peaks
 
-	end	main
+; Reset Vector
+    ORG 0x0000
+    GOTO MAIN
+
+; Interrupt Vector
+    ORG 0x0018
+    GOTO INTERRUPT_HANDLER
+
+; Main Program
+MAIN:
+    ; Initialize Subsystems
+    CALL ADC_INIT
+    CALL INTERVAL_INIT
+    CALL PEAK_DETECTION_INIT
+
+    ; Global Interrupt Enable
+    BSF INTCON, GIE
+
+; Main Measurement Loop
+MEASURE_LOOP:
+    ; Read Analog Input
+    CALL ADC_READ
+
+    ; Check for Peak
+    CALL DETECT_PEAK
+    BNC MEASURE_LOOP       ; No peak detected, continue loop
+
+    ; Peak Detected - Measure Interval
+    CALL MEASURE_INTERVAL
+
+    ; Optional: Process or Log Peak Data
+    INCF peak_count, F
+
+    GOTO MEASURE_LOOP
+
+; Interrupt Handler
+INTERRUPT_HANDLER:
+    ; Dispatch to appropriate interrupt service routines
+    CALL ADC_ISR
+    CALL INTERVAL_ISR
+
+    RETFIE
+    
+    END
