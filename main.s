@@ -3,7 +3,7 @@
 ; Main program control for Heartbeat Interval Measurement
 ; PIC18F87K22 Processor
 
-#include <p18f87k22.inc>
+#include <xc.inc>
 #include "config.inc"
 #include "adc_routines.inc"
 #include "peak_detection.inc"
