@@ -151,12 +151,10 @@ key_pressed:
     addwf   KeyPad_col, w, a ; Add column
     
     ; Map to standard keypad layout:
-    ; [1][2][3][A]
-    ; [4][5][6][B]
-    ; [7][8][9][C]
-    ; [*][0][#][D]
-    ; For asterisk (*), we'll use 0x0E (14)
-    ; For hash (#), we'll use 0x0F (15)
+    ; [1][2][3][F]
+    ; [4][5][6][E]
+    ; [7][8][9][D]
+    ; [A][0][B][C]
     
     ; Use lookup table for mapping
     movwf   KeyPad_temp, a  ; Save calculated index
@@ -220,9 +218,9 @@ delay_loop:
 ;*******************************************************************************
 psect   const
 KeyPad_mapping:
-    db      0x01, 0x02, 0x03, 0x0A  ; 1, 2, 3, A (row 0)
-    db      0x04, 0x05, 0x06, 0x0B  ; 4, 5, 6, B (row 1)
-    db      0x07, 0x08, 0x09, 0x0C  ; 7, 8, 9, C (row 2)
-    db      0x0E, 0x00, 0x0F, 0x0D  ; *, 0, #, D (row 3)
+    db      0x01, 0x02, 0x03, 0x0F  ; 1, 2, 3, F (row 0)
+    db      0x04, 0x05, 0x06, 0x0E  ; 4, 5, 6, E (row 1)
+    db      0x07, 0x08, 0x09, 0x0D  ; 7, 8, 9, D (row 2)
+    db      0x0A, 0x00, 0x0B, 0x0C  ; A, 0, B, C (row 3)
     
 end
