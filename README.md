@@ -6,7 +6,7 @@ This project implements a real-time cardiac monitoring system using the **PIC18F
 ## Current Features
 - **Real-time Heartbeat Monitoring** using the AD8232 sensor.
 - **RR-Interval Measurement**: The interval between heartbeats is computed and output in hundredths of a second to **PORTC**.
-- - **Oscilloscope visualization** of the raw signal.
+-  **Oscilloscope visualization** of the raw signal.
 
 ## Planned Features
 - **Heart Rate Variability (HRV) Calculation** based on RR-interval standard deviation.
