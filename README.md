@@ -1,4 +1,4 @@
-# Heart Monitor Project
+# Heart Monitor Project - Microprocessors lab project Imperial College London
 
 ## Overview
 This project implements a real-time cardiac monitoring system using the **PIC18F87K22** microprocessor and the **AD8232 ECG Module**. The system captures and processes the user's heartbeat data and outputs the RR-interval in hundredths of seconds to **PORTC**. Future development will include calculations for **Heart Rate Variability (HRV)** and **Heartbeat Coherence (HC)**, along with a display and visual feedback system.
